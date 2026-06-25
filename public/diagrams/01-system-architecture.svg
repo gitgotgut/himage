@@ -1,0 +1,87 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="620" viewBox="0 0 1200 620">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;display=swap');
+    </style>
+  </defs>
+  <rect width="1200" height="620" fill="#FFFFFF" rx="16"/>
+  
+    <text x="48" y="52" font-family="Plus Jakarta Sans, sans-serif" font-size="28" font-weight="700" fill="#141C2E">System Architecture</text>
+    <text x="48" y="78" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#64748B">High-level overview of Hugo's three-tier architecture and external service integrations</text>
+
+    <!-- Browser -->
+    <rect x="48" y="120" width="180" height="100" rx="12" fill="#EBF0F7" stroke="#4A6FA5" stroke-width="2"/>
+    <text x="138" y="162" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="22" fill="#4A6FA5">🖥</text>
+    <text x="138" y="186" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#141C2E">Browser</text>
+    <text x="138" y="204" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#64748B">React 18 + Next.js</text>
+
+    <!-- Arrow -->
+    <path d="M228,170 L278,170" stroke="#94A3B8" stroke-width="2" fill="none" marker-end="url(#arrowhead)"/>
+    <text x="253" y="162" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#94A3B8">HTTPS</text>
+
+    <!-- Next.js container -->
+    <rect x="278" y="100" width="580" height="240" rx="16" fill="#F5F7FA" stroke="#4A6FA5" stroke-width="2" stroke-dasharray="6 3"/>
+    <text x="568" y="130" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="16" font-weight="700" fill="#4A6FA5">Next.js 14 App Router</text>
+
+    <!-- Inner boxes -->
+    <rect x="298" y="150" width="130" height="70" rx="8" fill="#FFFFFF" stroke="#4A6FA5" stroke-width="1.5"/>
+    <text x="363" y="180" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#141C2E">middleware.ts</text>
+    <text x="363" y="198" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#64748B">Route protection</text>
+
+    <rect x="443" y="150" width="130" height="70" rx="8" fill="#FFFFFF" stroke="#4A6FA5" stroke-width="1.5"/>
+    <text x="508" y="180" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#141C2E">API Routes</text>
+    <text x="508" y="198" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#64748B">REST endpoints</text>
+
+    <rect x="298" y="240" width="130" height="70" rx="8" fill="#FFFFFF" stroke="#4A6FA5" stroke-width="1.5"/>
+    <text x="363" y="270" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#141C2E">Zod Validation</text>
+    <text x="363" y="288" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#64748B">Input schemas</text>
+
+    <rect x="443" y="240" width="130" height="70" rx="8" fill="#FFFFFF" stroke="#4A6FA5" stroke-width="1.5"/>
+    <text x="508" y="270" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#141C2E">NextAuth.js v5</text>
+    <text x="508" y="288" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#64748B">JWT sessions</text>
+
+    <!-- Prisma box inside container -->
+    <rect x="598" y="180" width="240" height="100" rx="8" fill="#FFFFFF" stroke="#4A6FA5" stroke-width="1.5"/>
+    <text x="718" y="218" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#141C2E">Prisma ORM</text>
+    <text x="718" y="236" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#64748B">Type-safe DB queries</text>
+    <text x="718" y="254" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="9" fill="#64748B">Schema migrations</text>
+
+    <!-- Arrows down -->
+    <path d="M400,340 L400,400" stroke="#94A3B8" stroke-width="2" fill="none"/>
+    <path d="M568,340 L568,400" stroke="#94A3B8" stroke-width="2" fill="none"/>
+    <path d="M738,340 L738,400" stroke="#94A3B8" stroke-width="2" fill="none"/>
+
+    <!-- Bottom service boxes -->
+    <rect x="298" y="400" width="200" height="90" rx="12" fill="#EBF0F7" stroke="#4A6FA5" stroke-width="2"/>
+    <text x="398" y="438" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#4A6FA5">PostgreSQL (Neon)</text>
+    <text x="398" y="458" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#64748B">Users, Subscriptions</text>
+    <text x="398" y="474" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#64748B">Insurance Policies</text>
+
+    <rect x="518" y="400" width="200" height="90" rx="12" fill="#FDF2F0" stroke="#C8644A" stroke-width="2"/>
+    <text x="618" y="438" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#C8644A">Anthropic Claude</text>
+    <text x="618" y="458" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#64748B">Email parsing</text>
+    <text x="618" y="474" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#64748B">Insurance analysis</text>
+
+    <rect x="738" y="400" width="200" height="90" rx="12" fill="#ECFDF5" stroke="#22C55E" stroke-width="2"/>
+    <text x="838" y="438" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="700" fill="#22C55E">External APIs</text>
+    <text x="838" y="458" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#64748B">Gmail, Outlook</text>
+    <text x="838" y="474" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#64748B">Google/MS OAuth</text>
+
+    <!-- Legend -->
+    <rect x="48" y="530" width="1104" height="44" rx="8" fill="#F5F7FA"/>
+    
+    <rect x="72" y="546" width="12" height="12" rx="3" fill="#4A6FA5"/>
+    <text x="90" y="556" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#64748B">Application Layer</text>
+  
+    
+    <rect x="260" y="546" width="12" height="12" rx="3" fill="#C8644A"/>
+    <text x="278" y="556" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#64748B">AI Services</text>
+  
+    
+    <rect x="420" y="546" width="12" height="12" rx="3" fill="#22C55E"/>
+    <text x="438" y="556" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#64748B">External APIs</text>
+  
+
+    <defs><marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6" fill="#94A3B8"/></marker></defs>
+  
+</svg>

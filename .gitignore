@@ -1,0 +1,33 @@
+# Python
+__pycache__/
+*.pyc
+
+# Run artifacts
+runs/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Design exports (binary)
+design/exports/*.png
+design/exports/*.svg
+design/exports/*.pdf
+
+# Dependencies
+/node_modules
+
+# Next.js
+/.next/
+/out/
+
+# Local env files
+.env*.local
+.env
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
+# Vercel
+.vercel

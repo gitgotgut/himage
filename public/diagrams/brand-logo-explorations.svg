@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1400" height="400" viewBox="0 0 1400 400">
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Fraunces:wght@600&amp;display=swap');</style></defs>
+  
+    <rect width="1400" height="400" fill="#FFFFFF" rx="16" stroke="#00000010" stroke-width="1"/>
+    <text x="48" y="56" font-family="Fraunces, serif" font-size="28" font-weight="600" fill="#1A1527">Logo Explorations</text>
+    <text x="48" y="80" font-family="Plus Jakarta Sans, sans-serif" font-size="13" fill="#888888">Four different directions for the Hugo brand mark</text>
+
+    
+        <rect x="260" y="110" width="240" height="260" rx="12" fill="#FAFAFA"/>
+        <text x="380" y="140" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="#999999" letter-spacing="1.5">1. CLEAN WORDMARK</text>
+        <text x="380" y="205" text-anchor="middle" font-family="Fraunces, serif" font-size="48" font-weight="600" fill="#1A1527" letter-spacing="-1.5">hugo</text>
+        <text x="380" y="310" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">Pure serif wordmark — confident,</text><text x="380" y="326" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">minimal, name-forward. Like Stripe.</text>
+      
+        <rect x="540" y="110" width="240" height="260" rx="12" fill="#FAFAFA"/>
+        <text x="660" y="140" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="#999999" letter-spacing="1.5">2. SHIELD MONOGRAM</text>
+        
+          <rect x="632" y="156" width="56" height="64" rx="8" fill="#5B45A8"/>
+          <rect x="632" y="196" width="56" height="24" rx="16" fill="#5B45A8"/>
+          <text x="660" y="200" text-anchor="middle" font-family="Fraunces, serif" font-size="32" font-weight="600" fill="#FFFFFF">h</text>
+          <text x="660" y="252" text-anchor="middle" font-family="Fraunces, serif" font-size="24" font-weight="600" fill="#1A1527" letter-spacing="-0.5">hugo</text>
+        
+        <text x="660" y="310" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">Shield = protection/guardian.</text><text x="660" y="326" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">Lowercase h = approachable.</text>
+      
+        <rect x="820" y="110" width="240" height="260" rx="12" fill="#FAFAFA"/>
+        <text x="940" y="140" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="#999999" letter-spacing="1.5">3. ORBITAL RING</text>
+        
+          <circle cx="940" cy="185" r="26" fill="none" stroke="#4A6FA5" stroke-width="3"/>
+          <text x="940" y="195" text-anchor="middle" font-family="Fraunces, serif" font-size="28" font-weight="600" fill="#4A6FA5">h</text>
+          <circle cx="966" cy="165" r="5" fill="#C8644A"/>
+          <text x="940" y="242" text-anchor="middle" font-family="Fraunces, serif" font-size="24" font-weight="600" fill="#1A1527" letter-spacing="-0.5">hugo</text>
+        
+        <text x="940" y="310" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">Circle = recurring/cyclical.</text><text x="940" y="326" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">Dot = active monitoring.</text>
+      
+        <rect x="1100" y="110" width="240" height="260" rx="12" fill="#FAFAFA"/>
+        <text x="1220" y="140" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="600" fill="#999999" letter-spacing="1.5">4. ROUNDED BADGE</text>
+        
+          <rect x="1166" y="170" width="108" height="44" rx="22" fill="#4A6FA5"/>
+          <text x="1220" y="199" text-anchor="middle" font-family="Fraunces, serif" font-size="22" font-weight="600" fill="#FFFFFF" letter-spacing="-0.5">hugo</text>
+        
+        <text x="1220" y="310" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">Pill badge — modern, app-icon</text><text x="1220" y="326" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#999999">friendly. Like a trust stamp.</text>
+      
+  
+</svg>

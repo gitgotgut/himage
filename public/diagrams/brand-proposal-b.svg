@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900">
+  <defs><style>@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Fraunces:wght@600&amp;display=swap');</style></defs>
+  
+    <rect width="1200" height="900" fill="#F7F3EC" rx="16"/>
+    <rect y="0" width="1200" height="64" fill="#FFFFFF" rx="16"/>
+    <rect y="16" width="1200" height="48" fill="#FFFFFF"/>
+    <line x1="0" y1="64" x2="1200" y2="64" stroke="#1A3A2A" stroke-opacity="0.07"/>
+    <circle cx="32" cy="32" r="14" fill="#2D7A4E"/>
+    <text x="56" y="38" font-family="Fraunces, serif" font-size="18" font-weight="600" fill="#1A3A2A">hugo</text>
+    <text x="520" y="38" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#6B7B71">Dashboard</text>
+    <text x="620" y="38" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#6B7B71">Subscriptions</text>
+    <text x="740" y="38" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" fill="#6B7B71">Insurance</text>
+
+    <rect x="64" y="100" width="280" height="28" rx="14" fill="#2D7A4E" fill-opacity="0.08"/>
+    <text x="204" y="118" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#2D7A4E">● PROPOSAL B — FOREST GREEN + CREAM</text>
+
+    <defs><linearGradient id="gB" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#F7F3EC"/><stop offset="100%" stop-color="#EBE5DA"/></linearGradient></defs>
+    <rect x="0" y="80" width="1200" height="260" fill="url(#gB)"/>
+    <text x="64" y="180" font-family="Fraunces, serif" font-size="44" font-weight="600" fill="#1A3A2A" letter-spacing="-1">Your finances,</text>
+    <text x="64" y="230" font-family="Fraunces, serif" font-size="44" font-weight="600" fill="#1A3A2A" letter-spacing="-1">under one roof.</text>
+    <text x="64" y="265" font-family="Plus Jakarta Sans, sans-serif" font-size="16" fill="#6B7B71">Hugo keeps watch over your subscriptions and insurance — so you don't have to.</text>
+    <rect x="64" y="290" width="120" height="40" rx="8" fill="#2D7A4E"/>
+    <text x="124" y="315" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF">Get Started</text>
+    <rect x="200" y="290" width="120" height="40" rx="8" fill="none" stroke="#2D7A4E" stroke-width="1.5"/>
+    <text x="260" y="315" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="14" font-weight="600" fill="#2D7A4E">Learn More</text>
+
+    <text x="64" y="385" font-family="Fraunces, serif" font-size="24" font-weight="600" fill="#1A3A2A">Dashboard Preview</text>
+    
+        <rect x="64" y="405" width="340" height="100" rx="12" fill="#FFFFFF" stroke="#1A3A2A" stroke-opacity="0.06"/>
+        <text x="84" y="432" font-family="Plus Jakarta Sans, sans-serif" font-size="12" fill="#6B7B71">Monthly Spend</text>
+        <text x="84" y="468" font-family="Plus Jakarta Sans, sans-serif" font-size="28" font-weight="700" fill="#1A3A2A">2.847 kr</text>
+        <text x="84" y="490" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#2D7A4E">−12% fra last month</text>
+      
+        <rect x="434" y="405" width="340" height="100" rx="12" fill="#FFFFFF" stroke="#1A3A2A" stroke-opacity="0.06"/>
+        <text x="454" y="432" font-family="Plus Jakarta Sans, sans-serif" font-size="12" fill="#6B7B71">Active Subscriptions</text>
+        <text x="454" y="468" font-family="Plus Jakarta Sans, sans-serif" font-size="28" font-weight="700" fill="#1A3A2A">14</text>
+        <text x="454" y="490" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#2D7A4E">2 new in last week</text>
+      
+        <rect x="804" y="405" width="340" height="100" rx="12" fill="#FFFFFF" stroke="#1A3A2A" stroke-opacity="0.06"/>
+        <text x="824" y="432" font-family="Plus Jakarta Sans, sans-serif" font-size="12" fill="#6B7B71">Potential Savings</text>
+        <text x="824" y="468" font-family="Plus Jakarta Sans, sans-serif" font-size="28" font-weight="700" fill="#1A3A2A">485 kr</text>
+        <text x="824" y="490" font-family="Plus Jakarta Sans, sans-serif" font-size="11" fill="#2D7A4E">AI-detected overlaps</text>
+      
+
+    <rect x="0" y="560" width="1200" height="340" fill="#EBE5DA"/>
+    <text x="64" y="596" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#6B7B71" letter-spacing="1.5">COLOR PALETTE</text>
+    
+        <rect x="64" y="615" width="160" height="56" rx="8" fill="#2D7A4E" />
+        <text x="144" y="692" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">Primary</text>
+        <text x="144" y="706" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">#2D7A4E</text>
+      
+        <rect x="244" y="615" width="160" height="56" rx="8" fill="#5BA37B" />
+        <text x="324" y="692" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">Secondary</text>
+        <text x="324" y="706" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">#5BA37B</text>
+      
+        <rect x="424" y="615" width="160" height="56" rx="8" fill="#E07A5F" />
+        <text x="504" y="692" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">Accent</text>
+        <text x="504" y="706" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">#E07A5F</text>
+      
+        <rect x="604" y="615" width="160" height="56" rx="8" fill="#F7F3EC" stroke="#D0C8B8" stroke-width="1"/>
+        <text x="684" y="692" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">Background</text>
+        <text x="684" y="706" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">#F7F3EC</text>
+      
+        <rect x="784" y="615" width="160" height="56" rx="8" fill="#D4A43A" />
+        <text x="864" y="692" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">Warning</text>
+        <text x="864" y="706" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">#D4A43A</text>
+      
+        <rect x="964" y="615" width="160" height="56" rx="8" fill="#C44B4B" />
+        <text x="1044" y="692" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">Error</text>
+        <text x="1044" y="706" text-anchor="middle" font-family="Plus Jakarta Sans, sans-serif" font-size="10" font-weight="500" fill="#6B7B71">#C44B4B</text>
+      
+
+    <text x="64" y="755" font-family="Plus Jakarta Sans, sans-serif" font-size="11" font-weight="600" fill="#6B7B71" letter-spacing="1.5">TYPOGRAPHY</text>
+    <text x="64" y="800" font-family="Fraunces, serif" font-size="28" font-weight="600" fill="#1A3A2A">Hugo keeps your</text>
+    <text x="64" y="838" font-family="Fraunces, serif" font-size="28" font-weight="600" fill="#1A3A2A">finances in check.</text>
+    <text x="64" y="862" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#6B7B71">Display — Fraunces</text>
+    <text x="600" y="800" font-family="Plus Jakarta Sans, sans-serif" font-size="16" fill="#1A3A2A">The quick brown fox jumps</text>
+    <text x="600" y="824" font-family="Plus Jakarta Sans, sans-serif" font-size="16" fill="#1A3A2A">over the lazy dog. 0123456789</text>
+    <text x="600" y="848" font-family="Plus Jakarta Sans, sans-serif" font-size="10" fill="#6B7B71">UI — Plus Jakarta Sans</text>
+  
+</svg>
