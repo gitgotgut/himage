@@ -12,6 +12,7 @@ model User {
   id              String         @id @default(cuid())
   email           String         @unique
   passwordHash    String
+  displayName     String?
   displayCurrency    String         @default("USD")
   householdId        String?
   gmailAccessToken      String?
@@ -32,6 +33,56 @@ model User {
   insuranceClaims   InsuranceClaim[]
   insuranceProposals InsuranceProposal[]
   bankTranscripts BankTranscript[]
+  ownedAlbums     Album[]        @relation("AlbumOwner")
+  uploadedPhotos  Photo[]        @relation("PhotoUploader")
+  albumAccess     AlbumAccess[]  @relation("UserAlbumAccess")
+}
+
+enum AlbumVisibility {
+  OPEN        // any signed-in family/friend can view
+  INVITE_ONLY // visible to the owner and shared-with members only
+}
+
+model Album {
+  id          String          @id @default(cuid())
+  ownerId     String
+  owner       User            @relation("AlbumOwner", fields: [ownerId], references: [id], onDelete: Cascade)
+  title       String
+  description String?
+  visibility  AlbumVisibility @default(INVITE_ONLY)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+  photos      Photo[]
+  access      AlbumAccess[]
+
+  @@index([ownerId])
+}
+
+model Photo {
+  id         String   @id @default(cuid())
+  albumId    String
+  album      Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  uploaderId String
+  uploader   User     @relation("PhotoUploader", fields: [uploaderId], references: [id], onDelete: Cascade)
+  url        String
+  caption    String?
+  width      Int?
+  height     Int?
+  createdAt  DateTime @default(now())
+
+  @@index([albumId])
+}
+
+model AlbumAccess {
+  id        String   @id @default(cuid())
+  albumId   String
+  album     Album    @relation(fields: [albumId], references: [id], onDelete: Cascade)
+  userId    String
+  user      User     @relation("UserAlbumAccess", fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([albumId, userId])
+  @@index([userId])
 }
 
 model Subscription {

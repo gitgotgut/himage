@@ -31,3 +31,7 @@ next-env.d.ts
 
 # Vercel
 .vercel
+
+# Runtime photo uploads (use Blob/Cloudinary in prod)
+/public/uploads/*
+!/public/uploads/.gitkeep

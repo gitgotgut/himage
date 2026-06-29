@@ -1,64 +1,114 @@
-"use client";
-
-import { Image, Plus, Users, Share2 } from "lucide-react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import Link from "next/link";
+import Image from "next/image";
+import { redirect } from "next/navigation";
+import { Images, Plus, ImageOff, Lock, Globe } from "lucide-react";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
 
-export default function HubPage() {
+export const dynamic = "force-dynamic";
+
+export default async function HubPage() {
+  const session = await auth();
+  if (!session?.user?.id) redirect("/");
+  const userId = session.user.id;
+
+  const albums = await prisma.album.findMany({
+    where: {
+      OR: [
+        { ownerId: userId },
+        { visibility: "OPEN" },
+        { access: { some: { userId } } },
+      ],
+    },
+    orderBy: { updatedAt: "desc" },
+    include: {
+      owner: { select: { id: true, displayName: true, email: true } },
+      photos: { orderBy: { createdAt: "desc" }, take: 1 },
+      _count: { select: { photos: true } },
+    },
+  });
+
   return (
-    <div className="max-w-4xl mx-auto">
-      <div className="mb-8 flex items-center justify-between">
+    <div>
+      <div className="mb-8 flex items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-bold mb-2">himage — Photos</h1>
-          <p className="text-muted-foreground">Share memories with family and friends</p>
+          <h1 className="text-3xl font-bold mb-1">Albums</h1>
+          <p className="text-muted-foreground">
+            Collect and share the moments worth reliving.
+          </p>
         </div>
-        <Button size="lg" className="gap-2">
-          <Plus className="h-4 w-4" />
-          New Album
+        <Button asChild size="lg" className="gap-2 shrink-0">
+          <Link href="/albums/new">
+            <Plus className="h-4 w-4" />
+            New Album
+          </Link>
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {albums.length === 0 ? (
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Your Albums</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">0</p>
-            <p className="text-xs text-muted-foreground mt-1">Photo albums</p>
+          <CardContent className="py-12 text-center">
+            <Images className="h-10 w-10 mx-auto text-muted-foreground mb-3" />
+            <p className="text-muted-foreground mb-4">No albums yet.</p>
+            <Button asChild variant="outline" className="gap-2">
+              <Link href="/albums/new">
+                <Plus className="h-4 w-4" />
+                Start an album
+              </Link>
+            </Button>
           </CardContent>
         </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Shared Access</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">0</p>
-            <p className="text-xs text-muted-foreground mt-1">Invited users</p>
-          </CardContent>
-        </Card>
-        <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">Total Photos</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p className="text-3xl font-bold">0</p>
-            <p className="text-xs text-muted-foreground mt-1">Across all albums</p>
-          </CardContent>
-        </Card>
-      </div>
-
-      <Card className="mt-8">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Image className="h-5 w-5" />
-            Your Albums
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p className="text-muted-foreground text-center py-8">No albums yet. Create one to share your memories!</p>
-        </CardContent>
-      </Card>
+      ) : (
+        <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+          {albums.map((album) => {
+            const cover = album.photos[0];
+            const isOwner = album.ownerId === userId;
+            return (
+              <Link key={album.id} href={`/albums/${album.id}`} className="group">
+                <Card className="overflow-hidden transition-colors hover:border-primary/50">
+                  <div className="relative aspect-square bg-muted">
+                    {cover ? (
+                      <Image
+                        src={cover.url}
+                        alt={album.title}
+                        fill
+                        sizes="(max-width: 640px) 50vw, 33vw"
+                        className="object-cover transition-transform group-hover:scale-[1.02]"
+                      />
+                    ) : (
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <ImageOff className="h-8 w-8 text-muted-foreground/50" />
+                      </div>
+                    )}
+                    <Badge
+                      variant="secondary"
+                      className="absolute top-2 right-2 gap-1"
+                    >
+                      {album.visibility === "OPEN" ? (
+                        <Globe className="h-3 w-3" />
+                      ) : (
+                        <Lock className="h-3 w-3" />
+                      )}
+                    </Badge>
+                  </div>
+                  <CardContent className="py-3">
+                    <p className="font-semibold truncate">{album.title}</p>
+                    <p className="text-xs text-muted-foreground">
+                      {album._count.photos}{" "}
+                      {album._count.photos === 1 ? "photo" : "photos"}
+                      {!isOwner &&
+                        ` · ${album.owner.displayName ?? album.owner.email}`}
+                    </p>
+                  </CardContent>
+                </Card>
+              </Link>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }
