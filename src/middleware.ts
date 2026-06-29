@@ -1,13 +1,22 @@
 import { auth } from "@/auth";
 import { NextResponse } from "next/server";
 
-const PUBLIC_PATHS = new Set(["/", "/login", "/register", "/gmail", "/outlook", "/pricing", "/about", "/faq", "/forgot-password", "/reset-password", "/privacy", "/terms"]);
+// Only the SSO callback is reachable without a session.
+const PUBLIC_PATHS = new Set(["/sso/callback"]);
+
+const HIFAMILY_URL = process.env.NEXT_PUBLIC_HIFAMILY_URL || "http://localhost:3000";
+const SELF_URL = process.env.NEXT_PUBLIC_PHOTO_URL || "http://localhost:3003";
 
 export default auth((req) => {
-  const { pathname } = req.nextUrl;
-  if (!req.auth && !PUBLIC_PATHS.has(pathname) && !pathname.startsWith("/features/")) {
-    return NextResponse.redirect(new URL("/login", req.url));
-  }
+  const { pathname, search } = req.nextUrl;
+
+  if (req.auth || PUBLIC_PATHS.has(pathname)) return;
+
+  // No session — hand off to hifamily SSO. It mints a token and bounces back
+  // to our callback, which establishes a local session then resumes `next`.
+  const callback = `${SELF_URL}/sso/callback?next=${encodeURIComponent(pathname + search)}`;
+  const ssoUrl = `${HIFAMILY_URL}/sso?redirect=${encodeURIComponent(callback)}`;
+  return NextResponse.redirect(ssoUrl);
 });
 
 export const config = {

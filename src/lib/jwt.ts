@@ -1,15 +1,21 @@
 import { SignJWT, jwtVerify } from 'jose';
 
-// Get keys from environment variables
-const privateKey = process.env.JWT_PRIVATE_KEY;
-const publicKey = process.env.JWT_PUBLIC_KEY;
+/**
+ * Cross-platform auth tokens (HS256).
+ *
+ * All hifamily platforms (hifamily, hiplan, himage, hugo) share a single
+ * `JWT_SECRET`. hifamily mints short-lived handoff tokens during SSO; the
+ * consumer platforms verify them with the same secret and then establish
+ * their own local session. The secret must be identical everywhere.
+ */
 
-if (!privateKey || !publicKey) {
-  throw new Error('JWT_PRIVATE_KEY and JWT_PUBLIC_KEY must be set in environment variables');
+function getSecret(): Uint8Array {
+  const secret = process.env.JWT_SECRET;
+  if (!secret) {
+    throw new Error('JWT_SECRET must be set in environment variables');
+  }
+  return new TextEncoder().encode(secret);
 }
-
-const secret = new TextEncoder().encode(privateKey);
-const publicSecret = new TextEncoder().encode(publicKey);
 
 export interface JWTPayload {
   sub: string; // user ID
@@ -20,31 +26,31 @@ export interface JWTPayload {
   exp?: number;
 }
 
-// Generate JWT token (RS256)
+// Generate a short-lived SSO handoff token (HS256). Default 5 minutes.
 export async function generateToken(
   payload: JWTPayload,
-  expiresIn: number = 900 // 15 minutes in seconds
+  expiresIn: number = 300
 ): Promise<string> {
-  const token = await new SignJWT(payload)
-    .setProtectedHeader({ alg: 'RS256' })
+  return new SignJWT({ ...payload })
+    .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setExpirationTime(Math.floor(Date.now() / 1000) + expiresIn)
-    .sign(secret);
-
-  return token;
+    .sign(getSecret());
 }
 
-// Verify JWT token
+// Verify a token and return its payload, or null if invalid/expired.
 export async function verifyToken(token: string): Promise<JWTPayload | null> {
   try {
-    const verified = await jwtVerify(token, publicSecret);
-    return verified.payload as JWTPayload;
-  } catch (error) {
+    const { payload } = await jwtVerify(token, getSecret(), {
+      algorithms: ['HS256'],
+    });
+    return payload as unknown as JWTPayload;
+  } catch {
     return null;
   }
 }
 
-// Extract token from Authorization header
+// Extract a bearer token from an Authorization header.
 export function extractToken(authHeader?: string): string | null {
   if (!authHeader) return null;
   const [scheme, token] = authHeader.split(' ');
