@@ -4,6 +4,7 @@ import { ArrowLeft, Globe, Lock } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { loadAlbumForUser } from "@/lib/albums";
+import { signedUrls } from "@/lib/supabase";
 import { Badge } from "@/components/ui/badge";
 import { PhotoUploader } from "./photo-uploader";
 import { PhotoGrid } from "./photo-grid";
@@ -50,6 +51,8 @@ export default async function AlbumDetailPage({
   });
   if (!full) notFound();
 
+  const photoMap = await signedUrls(full.photos.map((p) => p.url));
+
   return (
     <div className="max-w-4xl mx-auto">
       <Link
@@ -95,10 +98,8 @@ export default async function AlbumDetailPage({
         isOwner={isOwner}
         photos={full.photos.map((p) => ({
           id: p.id,
-          url: p.url,
+          src: photoMap[p.url] ?? null,
           caption: p.caption,
-          width: p.width,
-          height: p.height,
           uploaderId: p.uploaderId,
           uploaderName: personName(p.uploader),
         }))}

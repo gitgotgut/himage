@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { unlink } from "fs/promises";
-import path from "path";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { loadAlbumForUser } from "@/lib/albums";
+import { supabaseAdmin, PHOTO_BUCKET } from "@/lib/supabase";
 
 export const runtime = "nodejs";
 
@@ -31,12 +30,11 @@ export async function DELETE(
 
   await prisma.photo.delete({ where: { id: params.photoId } });
 
-  // Best-effort removal of the file on disk.
-  try {
-    await unlink(path.join(process.cwd(), "public", photo.url));
-  } catch {
-    // Ignore — the DB record is the source of truth.
-  }
+  // Best-effort removal from storage; the DB record is the source of truth.
+  await supabaseAdmin()
+    .storage.from(PHOTO_BUCKET)
+    .remove([photo.url])
+    .catch(() => null);
 
   return NextResponse.json({ ok: true });
 }

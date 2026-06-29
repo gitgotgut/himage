@@ -7,10 +7,8 @@ import { Trash2, ImageOff } from "lucide-react";
 
 type Photo = {
   id: string;
-  url: string;
+  src: string | null;
   caption: string | null;
-  width: number | null;
-  height: number | null;
   uploaderId: string;
   uploaderName: string;
 };
@@ -58,13 +56,20 @@ export function PhotoGrid({
             key={photo.id}
             className="group relative aspect-square rounded-lg overflow-hidden bg-muted"
           >
-            <Image
-              src={photo.url}
-              alt={photo.caption ?? `Photo by ${photo.uploaderName}`}
-              fill
-              sizes="(max-width: 640px) 50vw, 33vw"
-              className="object-cover"
-            />
+            {photo.src ? (
+              <Image
+                src={photo.src}
+                alt={photo.caption ?? `Photo by ${photo.uploaderName}`}
+                fill
+                unoptimized
+                sizes="(max-width: 640px) 50vw, 33vw"
+                className="object-cover"
+              />
+            ) : (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <ImageOff className="h-7 w-7 text-muted-foreground/50" />
+              </div>
+            )}
             {canDelete && (
               <button
                 type="button"

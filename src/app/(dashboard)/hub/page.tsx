@@ -4,6 +4,7 @@ import { redirect } from "next/navigation";
 import { Images, Plus, ImageOff, Lock, Globe } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
+import { signedUrls } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -30,6 +31,10 @@ export default async function HubPage() {
       _count: { select: { photos: true } },
     },
   });
+
+  const coverMap = await signedUrls(
+    albums.map((a) => a.photos[0]?.url).filter((p): p is string => !!p)
+  );
 
   return (
     <div>
@@ -65,16 +70,18 @@ export default async function HubPage() {
         <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
           {albums.map((album) => {
             const cover = album.photos[0];
+            const coverSrc = cover ? coverMap[cover.url] : undefined;
             const isOwner = album.ownerId === userId;
             return (
               <Link key={album.id} href={`/albums/${album.id}`} className="group">
                 <Card className="overflow-hidden transition-colors hover:border-primary/50">
                   <div className="relative aspect-square bg-muted">
-                    {cover ? (
+                    {coverSrc ? (
                       <Image
-                        src={cover.url}
+                        src={coverSrc}
                         alt={album.title}
                         fill
+                        unoptimized
                         sizes="(max-width: 640px) 50vw, 33vw"
                         className="object-cover transition-transform group-hover:scale-[1.02]"
                       />
