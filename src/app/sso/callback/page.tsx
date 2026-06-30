@@ -10,15 +10,15 @@ function SsoCallback() {
   const [failed, setFailed] = useState(false);
 
   useEffect(() => {
-    const token = params.get("token");
+    const code = params.get("code");
     const next = params.get("next") || "/hub";
 
-    if (!token) {
+    if (!code) {
       setFailed(true);
       return;
     }
 
-    signIn("sso", { token, redirect: false }).then((res) => {
+    signIn("sso", { code, redirect: false }).then((res) => {
       if (res?.error) {
         setFailed(true);
       } else {

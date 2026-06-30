@@ -3,6 +3,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { loadAlbumForUser } from "@/lib/albums";
 import { shareSchema } from "@/lib/validations/album";
+import { rateLimit } from "@/lib/rate-limit";
 
 // POST /api/albums/[id]/access — owner shares the album with another user by email
 export async function POST(
@@ -12,6 +13,10 @@ export async function POST(
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!(await rateLimit("share", session.user.id, 20, 60))) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
   const { album, isOwner } = await loadAlbumForUser(params.id, session.user.id);

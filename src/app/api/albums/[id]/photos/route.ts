@@ -5,6 +5,7 @@ import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { loadAlbumForUser } from "@/lib/albums";
 import { supabaseAdmin, PHOTO_BUCKET } from "@/lib/supabase";
+import { rateLimit } from "@/lib/rate-limit";
 
 export const runtime = "nodejs";
 
@@ -26,6 +27,10 @@ export async function POST(
   const session = await auth();
   if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  if (!(await rateLimit("upload", session.user.id, 60, 60))) {
+    return NextResponse.json({ error: "Too many requests" }, { status: 429 });
   }
 
   const { album, canContribute } = await loadAlbumForUser(

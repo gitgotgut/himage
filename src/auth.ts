@@ -1,12 +1,12 @@
 import NextAuth from "next-auth";
 import Credentials from "next-auth/providers/credentials";
-import { verifyToken } from "@/lib/jwt";
+import { prisma } from "@/lib/prisma";
 
 /**
- * hiplan has no local login. Sessions are established only via the hifamily
- * SSO handoff: the `/sso/callback` page receives a short-lived token, this
- * "sso" provider verifies it against the shared JWT_SECRET, and NextAuth then
- * issues a normal local session cookie.
+ * himage has no local login. Sessions are established only via the hifamily
+ * SSO hand-off: the `/sso/callback` page receives a single-use code, this "sso"
+ * provider atomically consumes it from the shared `SsoCode` table, and NextAuth
+ * then issues a normal local session cookie. No token ever rides in a URL.
  */
 export const { handlers, auth, signIn, signOut } = NextAuth({
   session: { strategy: "jwt" },
@@ -15,20 +15,29 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       id: "sso",
       name: "hifamily SSO",
       credentials: {
-        token: { label: "Token", type: "text" },
+        code: { label: "Code", type: "text" },
       },
       async authorize(credentials) {
-        const token = credentials?.token;
-        if (typeof token !== "string") return null;
+        const code = credentials?.code;
+        if (typeof code !== "string" || !code) return null;
 
-        const payload = await verifyToken(token);
-        if (!payload) return null;
+        // Atomically consume the single-use, unexpired code.
+        const rows = await prisma.$queryRaw<{ userId: string }[]>`
+          UPDATE "SsoCode" SET "usedAt" = (now() AT TIME ZONE 'UTC')
+          WHERE "code" = ${code}
+            AND "usedAt" IS NULL
+            AND "expiresAt" > (now() AT TIME ZONE 'UTC')
+          RETURNING "userId"`;
+        const userId = rows[0]?.userId;
+        if (!userId) return null;
 
-        return {
-          id: payload.sub,
-          email: payload.email,
-          name: payload.displayName ?? null,
-        };
+        const user = await prisma.user.findUnique({
+          where: { id: userId },
+          select: { id: true, email: true, displayName: true },
+        });
+        if (!user) return null;
+
+        return { id: user.id, email: user.email, name: user.displayName ?? null };
       },
     }),
   ],
