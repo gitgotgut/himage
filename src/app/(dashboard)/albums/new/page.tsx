@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
@@ -14,6 +14,14 @@ export default function NewAlbumPage() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [circles, setCircles] = useState<{ id: string; name: string }[]>([]);
+
+  useEffect(() => {
+    fetch("/api/circles")
+      .then((r) => (r.ok ? r.json() : []))
+      .then(setCircles)
+      .catch(() => {});
+  }, []);
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -21,10 +29,12 @@ export default function NewAlbumPage() {
     setLoading(true);
 
     const form = new FormData(e.currentTarget);
+    const share = (form.get("share") as string) || "";
     const payload = {
       title: form.get("title"),
       description: form.get("description") || undefined,
-      visibility: form.get("visibility"),
+      visibility: share ? "OPEN" : "INVITE_ONLY",
+      circleId: share || undefined,
     };
 
     const res = await fetch("/api/albums", {
@@ -82,14 +92,19 @@ export default function NewAlbumPage() {
             </div>
 
             <div className="space-y-1.5">
-              <Label htmlFor="visibility">Visibility</Label>
+              <Label htmlFor="share">Sharing</Label>
               <select
-                id="visibility"
-                name="visibility"
-                defaultValue="INVITE_ONLY"
+                id="share"
+                name="share"
+                defaultValue=""
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
-                <option value="INVITE_ONLY">Invite only — shared people can view</option>
+                <option value="">Invite only — shared people can view</option>
+                {circles.map((c) => (
+                  <option key={c.id} value={c.id}>
+                    Share with {c.name}
+                  </option>
+                ))}
               </select>
             </div>
 

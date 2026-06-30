@@ -1,4 +1,5 @@
 import { prisma } from "@/lib/prisma";
+import { getMyCircleIds } from "@/lib/circles";
 
 // Load an album plus the current user's relationship to it (owner / can view).
 export async function loadAlbumForUser(albumId: string, userId: string) {
@@ -13,11 +14,16 @@ export async function loadAlbumForUser(albumId: string, userId: string) {
 
   const isOwner = album.ownerId === userId;
   const isMember = album.access.some((a) => a.userId === userId);
-  // NOTE: cross-user OPEN visibility is disabled until Family Circles (Phase 6).
-  // Until then OPEN behaves like INVITE_ONLY: owner + explicitly shared members.
-  const canView = isOwner || isMember;
-  // Owner and explicitly-shared members may add photos; passers-by on an OPEN
-  // album can view but not contribute.
+  // OPEN albums are visible to members of the circle they're shared with.
+  const myCircleIds = await getMyCircleIds(userId);
+  const inCircle =
+    album.visibility === "OPEN" &&
+    !!album.circleId &&
+    myCircleIds.includes(album.circleId);
+
+  const canView = isOwner || isMember || inCircle;
+  // Owner and explicitly-shared members may add photos; circle viewers of an
+  // OPEN album can view but not contribute.
   const canContribute = isOwner || isMember;
 
   return { album, isOwner, canView, canContribute };

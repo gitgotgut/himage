@@ -5,6 +5,7 @@ import { Images, Plus, ImageOff, Lock, Globe } from "lucide-react";
 import { auth } from "@/auth";
 import { prisma } from "@/lib/prisma";
 import { signedUrls } from "@/lib/supabase";
+import { getMyCircleIds } from "@/lib/circles";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -15,12 +16,14 @@ export default async function HubPage() {
   const session = await auth();
   if (!session?.user?.id) redirect("/");
   const userId = session.user.id;
+  const myCircleIds = await getMyCircleIds(userId);
 
   const albums = await prisma.album.findMany({
     where: {
       OR: [
         { ownerId: userId },
         { access: { some: { userId } } },
+        { visibility: "OPEN", circleId: { in: myCircleIds } },
       ],
     },
     orderBy: { updatedAt: "desc" },

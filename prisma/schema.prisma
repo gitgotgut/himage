@@ -50,12 +50,14 @@ model Album {
   title       String
   description String?
   visibility  AlbumVisibility @default(INVITE_ONLY)
+  circleId    String?
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @updatedAt
   photos      Photo[]
   access      AlbumAccess[]
 
   @@index([ownerId])
+  @@index([circleId])
 }
 
 model Photo {

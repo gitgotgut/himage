@@ -13,6 +13,7 @@ export const albumCreateSchema = z.object({
   title: z.string().trim().min(1, "Title is required").max(120),
   description: optionalText(2000),
   visibility: z.enum(["OPEN", "INVITE_ONLY"]).default("INVITE_ONLY"),
+  circleId: z.string().optional(),
 });
 
 export const albumUpdateSchema = z
