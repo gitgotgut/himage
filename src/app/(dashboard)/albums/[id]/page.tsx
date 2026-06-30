@@ -10,6 +10,7 @@ import { PhotoUploader } from "./photo-uploader";
 import { PhotoGrid } from "./photo-grid";
 import { SharePanel } from "./share-panel";
 import { DeleteAlbumButton } from "./delete-album-button";
+import { AlbumEdit } from "./album-edit";
 
 export const dynamic = "force-dynamic";
 
@@ -108,6 +109,13 @@ export default async function AlbumDetailPage({
       {isOwner && (
         <>
           <div className="mt-10">
+            <AlbumEdit
+              albumId={full.id}
+              title={full.title}
+              description={full.description ?? ""}
+            />
+          </div>
+          <div className="mt-6">
             <SharePanel
               albumId={full.id}
               members={full.access.map((a) => ({
