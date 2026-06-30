@@ -90,7 +90,6 @@ export default function NewAlbumPage() {
                 className="flex h-10 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
               >
                 <option value="INVITE_ONLY">Invite only — shared people can view</option>
-                <option value="OPEN">Open — anyone in hifamily can view</option>
               </select>
             </div>
 

@@ -13,7 +13,9 @@ export async function loadAlbumForUser(albumId: string, userId: string) {
 
   const isOwner = album.ownerId === userId;
   const isMember = album.access.some((a) => a.userId === userId);
-  const canView = isOwner || album.visibility === "OPEN" || isMember;
+  // NOTE: cross-user OPEN visibility is disabled until Family Circles (Phase 6).
+  // Until then OPEN behaves like INVITE_ONLY: owner + explicitly shared members.
+  const canView = isOwner || isMember;
   // Owner and explicitly-shared members may add photos; passers-by on an OPEN
   // album can view but not contribute.
   const canContribute = isOwner || isMember;

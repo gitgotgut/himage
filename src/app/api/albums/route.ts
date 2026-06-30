@@ -15,7 +15,6 @@ export async function GET() {
     where: {
       OR: [
         { ownerId: userId },
-        { visibility: "OPEN" },
         { access: { some: { userId } } },
       ],
     },

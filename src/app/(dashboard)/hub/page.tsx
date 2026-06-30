@@ -20,7 +20,6 @@ export default async function HubPage() {
     where: {
       OR: [
         { ownerId: userId },
-        { visibility: "OPEN" },
         { access: { some: { userId } } },
       ],
     },

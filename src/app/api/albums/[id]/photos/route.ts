@@ -55,22 +55,47 @@ export async function POST(
     );
   }
 
-  const buffer = Buffer.from(await file.arrayBuffer());
+  const inputBuffer = Buffer.from(await file.arrayBuffer());
 
+  // Decode + validate the actual bytes (not the client-supplied MIME). Raster
+  // formats are re-encoded to strip EXIF/GPS metadata and bound dimensions,
+  // which also defends against EXIF leaks and decompression bombs. Anything
+  // that isn't a real image of the declared type is rejected here.
+  let outputBuffer: Buffer;
   let width: number | undefined;
   let height: number | undefined;
   try {
-    const meta = await sharp(buffer).metadata();
-    width = meta.width;
-    height = meta.height;
+    if (file.type === "image/gif") {
+      const meta = await sharp(inputBuffer, { animated: true }).metadata();
+      if (meta.format !== "gif") throw new Error("not a gif");
+      width = meta.width;
+      height = meta.pageHeight ?? meta.height;
+      outputBuffer = inputBuffer; // GIFs carry no GPS EXIF; store as-is
+    } else {
+      const pipeline = sharp(inputBuffer)
+        .rotate() // apply EXIF orientation; output then drops all metadata
+        .resize({ width: 4000, height: 4000, fit: "inside", withoutEnlargement: true });
+      outputBuffer =
+        file.type === "image/png"
+          ? await pipeline.png().toBuffer()
+          : file.type === "image/webp"
+          ? await pipeline.webp({ quality: 85 }).toBuffer()
+          : await pipeline.jpeg({ quality: 85 }).toBuffer();
+      const meta = await sharp(outputBuffer).metadata();
+      width = meta.width;
+      height = meta.height;
+    }
   } catch {
-    // Non-fatal: store without dimensions.
+    return NextResponse.json(
+      { error: "File is not a valid image" },
+      { status: 400 }
+    );
   }
 
   const objectPath = `${params.id}/${randomUUID()}.${ext}`;
   const { error: uploadError } = await supabaseAdmin()
     .storage.from(PHOTO_BUCKET)
-    .upload(objectPath, buffer, { contentType: file.type, upsert: false });
+    .upload(objectPath, outputBuffer, { contentType: file.type, upsert: false });
 
   if (uploadError) {
     console.error("Supabase upload error:", uploadError);
