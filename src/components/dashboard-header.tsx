@@ -8,6 +8,7 @@ import { LogOut, Menu, Images } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sheet";
 import { SidebarNav, type SidebarNavItem } from "@/components/sidebar-nav";
+import { AppSwitcher } from "@/components/app-switcher";
 
 export function DashboardHeader({ sidebarItems }: { sidebarItems: SidebarNavItem[] }) {
   const pathname = usePathname();
@@ -37,15 +38,18 @@ export function DashboardHeader({ sidebarItems }: { sidebarItems: SidebarNavItem
             </Link>
           </div>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            className="text-xs gap-1"
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
-            <LogOut className="h-3.5 w-3.5" />
-            <span className="hidden sm:inline">Sign out</span>
-          </Button>
+          <div className="flex items-center gap-1">
+            <AppSwitcher current="photo" />
+            <Button
+              variant="ghost"
+              size="sm"
+              className="text-xs gap-1"
+              onClick={() => signOut({ callbackUrl: "/" })}
+            >
+              <LogOut className="h-3.5 w-3.5" />
+              <span className="hidden sm:inline">Sign out</span>
+            </Button>
+          </div>
         </div>
       </header>
 
